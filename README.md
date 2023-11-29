@@ -3,6 +3,7 @@
 [![Test](https://github.com/claudemircasa/custom_flutter_chord/actions/workflows/test.yml/badge.svg)](https://github.com/claudemircasa/custom_flutter_chord/actions/workflows/test.yml)
 
 Chord parser for Flutter apps.
+Original repository at: [paurakhsharma](https://github.com/paurakhsharma/flutter_chord)
 
 ## Features
 
