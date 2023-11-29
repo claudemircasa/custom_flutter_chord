@@ -127,27 +127,27 @@ class _LyricsRendererState extends State<LyricsRenderer> {
 
   String replaceChord(String chord) {
     String _chord = chord;
-    switch(widget.chordNotation) {
+    switch (widget.chordNotation) {
       case ChordNotation.american:
         int i = 0;
         for (var c in americanNotes) {
-          if(chord.indexOf(c) >= 0) {
-           _chord = chord.replaceAll(RegExp(c), widget.chordPresentation![i]);
+          if (chord.indexOf(c) >= 0) {
+            _chord = chord.replaceAll(RegExp(c), widget.chordPresentation![i]);
             break;
           }
-          i+=1;
+          i += 1;
         }
-      break;
+        break;
       default:
         int i = 0;
         for (var c in italianNotes) {
-          if(chord.indexOf(c) >= 0) {
-           _chord = chord.replaceAll(RegExp(c), widget.chordPresentation![i]);
+          if (chord.indexOf(c) >= 0) {
+            _chord = chord.replaceAll(RegExp(c), widget.chordPresentation![i]);
             break;
           }
-          i+=1;
+          i += 1;
         }
-      break;
+        break;
     }
     return _chord;
   }
@@ -203,18 +203,25 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                   if (widget.showChord)
                     Row(
                       children: line.chords
-                          .asMap().entries.map((chord) => Row(
+                          .asMap()
+                          .entries
+                          .map((chord) => Row(
                                 children: [
                                   SizedBox(
-                                    width: !widget.showText ? ( chord.key == 0 ? 0 : fixedChordSpace ) : chord.value.leadingSpace,
+                                    width: !widget.showText
+                                        ? (chord.key == 0 ? 0 : fixedChordSpace)
+                                        : chord.value.leadingSpace,
                                   ),
                                   GestureDetector(
-                                    onTap: () =>
-                                        widget.onTapChord(chord.value.chordText),
+                                    onTap: () => widget
+                                        .onTapChord(chord.value.chordText),
                                     child: RichText(
                                       textScaleFactor: widget.scaleFactor,
                                       text: TextSpan(
-                                        text: widget.chordPresentation != null ? replaceChord(chord.value.chordText) : chord.value.chordText,
+                                        text: widget.chordPresentation != null
+                                            ? replaceChord(
+                                                chord.value.chordText)
+                                            : chord.value.chordText,
                                         style: widget.chordStyle,
                                       ),
                                     ),
@@ -223,11 +230,12 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                               ))
                           .toList(),
                     ),
-                  if (widget.showText) RichText(
-                    textScaleFactor: widget.scaleFactor,
-                    text:
-                        TextSpan(text: line.lyrics, style: getLineTextStyle()),
-                  )
+                  if (widget.showText)
+                    RichText(
+                      textScaleFactor: widget.scaleFactor,
+                      text: TextSpan(
+                          text: line.lyrics, style: getLineTextStyle()),
+                    )
                 ],
               );
             },
