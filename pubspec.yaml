@@ -4,7 +4,7 @@ version: 0.1.3
 repository: https://github.com/claudemircasa/custom_flutter_chord
 
 environment:
-  sdk: '>=2.13.0 <3.0.0'
+  sdk: '>=2.13.0 <4.0.0'
   flutter: '>=1.17.0'
 
 dependencies:
@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
   mockito: ^5.0.17
