@@ -55,7 +55,7 @@ class LyricsRenderer extends StatefulWidget {
   final List<String>? chordPresentation;
 
   const LyricsRenderer(
-      {Key? key,
+      {super.key,
       required this.lyrics,
       required this.textStyle,
       required this.chordStyle,
@@ -75,8 +75,7 @@ class LyricsRenderer extends StatefulWidget {
       this.leadingWidget,
       this.trailingWidget,
       this.chordNotation = ChordNotation.american,
-      this.chordPresentation})
-      : super(key: key);
+      this.chordPresentation});
 
   @override
   State<LyricsRenderer> createState() => _LyricsRendererState();
@@ -126,13 +125,14 @@ class _LyricsRendererState extends State<LyricsRenderer> {
   }
 
   String replaceChord(String chord) {
-    String _chord = chord;
+    String currentChord = chord;
     switch (widget.chordNotation) {
       case ChordNotation.american:
         int i = 0;
         for (var c in americanNotes) {
-          if (chord.indexOf(c) >= 0) {
-            _chord = chord.replaceAll(RegExp(c), widget.chordPresentation![i]);
+          if (chord.contains(c)) {
+            currentChord =
+                chord.replaceAll(RegExp(c), widget.chordPresentation![i]);
             break;
           }
           i += 1;
@@ -141,23 +141,24 @@ class _LyricsRendererState extends State<LyricsRenderer> {
       default:
         int i = 0;
         for (var c in italianNotes) {
-          if (chord.indexOf(c) >= 0) {
-            _chord = chord.replaceAll(RegExp(c), widget.chordPresentation![i]);
+          if (chord.contains(c)) {
+            currentChord =
+                chord.replaceAll(RegExp(c), widget.chordPresentation![i]);
             break;
           }
           i += 1;
         }
         break;
     }
-    return _chord;
+    return currentChord;
   }
 
   @override
   Widget build(BuildContext context) {
-    final double fixedChordSpace = 10.0;
-    ChordProcessor _chordProcessor =
+    const double fixedChordSpace = 10.0;
+    ChordProcessor chordProcessor =
         ChordProcessor(context, widget.chordNotation);
-    final chordLyricsDocument = _chordProcessor.processText(
+    final chordLyricsDocument = chordProcessor.processText(
       text: widget.lyrics,
       lyricsStyle: widget.textStyle,
       chordStyle: widget.chordStyle,

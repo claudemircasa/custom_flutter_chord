@@ -57,12 +57,12 @@ class ChordProcessor {
       }
     }
 
-    List<ChordLyricsLine> _chordLyricsLines = newLines
+    List<ChordLyricsLine> chordLyricsLines = newLines
         .map<ChordLyricsLine>(
             (line) => _processLine(line, lyricsStyle, chordStyle, chorusStyle))
         .toList();
 
-    return ChordLyricsDocument(_chordLyricsLines,
+    return ChordLyricsDocument(chordLyricsLines,
         capo: metadata.capo,
         artist: metadata.artist,
         title: metadata.title,
@@ -74,44 +74,43 @@ class ChordProcessor {
       required String currentLine,
       required TextStyle lyricsStyle,
       required int widgetPadding}) {
-    String _character = '';
-    int _characterIndex = 0;
-    String _currentCharacters = '';
-    bool _chordHasStartedOuter = false;
-    int _lastSpace = 0;
+    String character = '';
+    int characterIndex = 0;
+    String currentCharacters = '';
+    bool chordHasStartedOuter = false;
+    int lastSpace = 0;
 
     //print('found a big line $currentLine');
 
     //work our way through the line and split when we need to
     for (var j = 0; j < currentLine.length; j++) {
-      _character = currentLine[j];
-      if (_character == '[') {
-        _chordHasStartedOuter = true;
-      } else if (_character == ']') {
-        _chordHasStartedOuter = false;
-      } else if (!_chordHasStartedOuter) {
-        _currentCharacters += _character;
-        if (_character == ' ') {
+      character = currentLine[j];
+      if (character == '[') {
+        chordHasStartedOuter = true;
+      } else if (character == ']') {
+        chordHasStartedOuter = false;
+      } else if (!chordHasStartedOuter) {
+        currentCharacters += character;
+        if (character == ' ') {
           //use this marker to only split where there are spaces. We can trim later.
-          _lastSpace = j;
+          lastSpace = j;
         }
 
         //This is the point where we need to split
         //widgetPadding has been added as a parameter to be passed from the build function
         //It is intended to allow for padding in the widget when comparing it to screen width
         //An additional buffer of around 10 might be needed to definitely stop overflow (ie. padding + 10).
-        if (textWidth(_currentCharacters, lyricsStyle) + widgetPadding >=
+        if (textWidth(currentCharacters, lyricsStyle) + widgetPadding >=
             media) {
-          newLines
-              .add(currentLine.substring(_characterIndex, _lastSpace).trim());
-          _currentCharacters = '';
-          _characterIndex = _lastSpace;
+          newLines.add(currentLine.substring(characterIndex, lastSpace).trim());
+          currentCharacters = '';
+          characterIndex = lastSpace;
         }
       }
     }
     //add the rest of the long line
     newLines
-        .add(currentLine.substring(_characterIndex, currentLine.length).trim());
+        .add(currentLine.substring(characterIndex, currentLine.length).trim());
   }
 
   /// Return the textwidth of the text in the given style
@@ -129,10 +128,10 @@ class ChordProcessor {
   bool isChorus = false;
   ChordLyricsLine _processLine(String line, TextStyle lyricsStyle,
       TextStyle chordStyle, TextStyle chorusStyle) {
-    ChordLyricsLine _chordLyricsLine = ChordLyricsLine();
-    String _lyricsSoFar = '';
-    String _chordsSoFar = '';
-    bool _chordHasStarted = false;
+    ChordLyricsLine chordLyricsLine = ChordLyricsLine();
+    String lyricsSoFar = '';
+    String chordsSoFar = '';
+    bool chordHasStarted = false;
     if (line.contains("{soc}") || line.contains("{start_of_chorus}")) {
       isChorus = true;
     } else if (line.contains("{eoc}") || line.contains("{end_of_chorus}")) {
@@ -141,11 +140,11 @@ class ChordProcessor {
     line.split('').forEach((character) {
       if (character == ']') {
         final sizeOfLeadingLyrics = isChorus
-            ? textWidth(_lyricsSoFar, chorusStyle)
-            : textWidth(_lyricsSoFar, lyricsStyle);
+            ? textWidth(lyricsSoFar, chorusStyle)
+            : textWidth(lyricsSoFar, lyricsStyle);
 
-        final lastChordText = _chordLyricsLine.chords.isNotEmpty
-            ? _chordLyricsLine.chords.last.chordText
+        final lastChordText = chordLyricsLine.chords.isNotEmpty
+            ? chordLyricsLine.chords.last.chordText
             : '';
 
         final lastChordWidth = textWidth(lastChordText, chordStyle);
@@ -153,27 +152,27 @@ class ChordProcessor {
 
         double leadingSpace = max(0, sizeOfLeadingLyrics - lastChordWidth);
 
-        final transposedChord = chordTransposer.transposeChord(_chordsSoFar);
+        final transposedChord = chordTransposer.transposeChord(chordsSoFar);
 
-        _chordLyricsLine.chords.add(Chord(leadingSpace, transposedChord));
-        _chordLyricsLine.lyrics += _lyricsSoFar;
-        _lyricsSoFar = '';
-        _chordsSoFar = '';
-        _chordHasStarted = false;
+        chordLyricsLine.chords.add(Chord(leadingSpace, transposedChord));
+        chordLyricsLine.lyrics += lyricsSoFar;
+        lyricsSoFar = '';
+        chordsSoFar = '';
+        chordHasStarted = false;
       } else if (character == '[') {
-        _chordHasStarted = true;
+        chordHasStarted = true;
       } else {
-        if (_chordHasStarted) {
-          _chordsSoFar += character;
+        if (chordHasStarted) {
+          chordsSoFar += character;
         } else {
-          _lyricsSoFar += character;
+          lyricsSoFar += character;
         }
       }
     });
 
-    _chordLyricsLine.lyrics += _lyricsSoFar;
+    chordLyricsLine.lyrics += lyricsSoFar;
 
-    return _chordLyricsLine;
+    return chordLyricsLine;
   }
 }
 
