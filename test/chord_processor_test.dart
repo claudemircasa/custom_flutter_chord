@@ -8,7 +8,7 @@ void main() {
       MaterialApp(
         builder: (context, _) {
           String text = '[C]This is t[D]he lyrics[E]';
-          final textStyle = TextStyle(fontSize: 18, color: Colors.green);
+          const textStyle = TextStyle(fontSize: 18, color: Colors.green);
 
           final processor = ChordProcessor(context);
           final chordDocument = processor.processText(
@@ -60,8 +60,8 @@ void main() {
         builder: (context, _) {
           String text =
               '{soc}\n[C]This is t[D]he Cho[D]rus\n{eoc}\n[C]This is t[D]he lyrics[E]\n[A]This is t[D]he se[B]cond line[E]';
-          final textStyle = TextStyle(fontSize: 18, color: Colors.green);
-          final chorusStyle = TextStyle(
+          const textStyle = TextStyle(fontSize: 18, color: Colors.green);
+          const chorusStyle = TextStyle(
               fontSize: 21, fontWeight: FontWeight.bold, color: Colors.white);
 
           final processor = ChordProcessor(context);
@@ -119,7 +119,7 @@ void main() {
         builder: (context, _) {
           String text =
               '{capo: 3}\n{title: Test title}\n{artist: artist test}\n[C]This is t[D]he lyrics[E]\n[A]This is t[D]he se[B]cond line[E]';
-          final textStyle = TextStyle(fontSize: 18, color: Colors.green);
+          const textStyle = TextStyle(fontSize: 18, color: Colors.green);
 
           final processor = ChordProcessor(context);
           final chordDocument = processor.processText(
@@ -176,7 +176,7 @@ void main() {
         builder: (context, _) {
           String text =
               '[C]This is t[D]he lyrics[E] [A]This is t[D]he se[B]cond line[E] This [A]makes it [G]overflow';
-          final textStyle = TextStyle(fontSize: 18, color: Colors.green);
+          const textStyle = TextStyle(fontSize: 18, color: Colors.green);
 
           final processor = ChordProcessor(context);
           final chordDocument = processor.processText(
