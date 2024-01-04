@@ -212,7 +212,9 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                                 children: [
                                   SizedBox(
                                     width: !widget.showText
-                                        ? (chord.key == 0 ? 0 : widget.fixedChordSpace)
+                                        ? (chord.key == 0
+                                            ? 0
+                                            : widget.fixedChordSpace)
                                         : chord.value.leadingSpace,
                                   ),
                                   GestureDetector(

@@ -1,3 +1,6 @@
+## 0.1.4
+* Option to set fixed spaces when showing only chords
+
 ## 0.1.3
 * Option to hide lyric text and show only chords
 * Option to replace chords with other elements in presentation (ex: C -> DO)
