@@ -7,10 +7,7 @@ enum ChordNotation {
   portuguese,
 }
 
-enum ChordScale {
-  major,
-  minor
-}
+enum ChordScale { major, minor }
 
 const Map<String, String> minorScale = {
   "Cb": "G#m",
@@ -26,7 +23,7 @@ const Map<String, String> minorScale = {
   "F": "Dm",
   "F#": "D#m",
   "Gb": "Ebm",
-  "G" : "Em",
+  "G": "Em",
   "G#": "Fm",
   "Ab": "Fm",
   "A": "F#m",

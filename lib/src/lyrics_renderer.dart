@@ -176,18 +176,24 @@ class _LyricsRendererState extends State<LyricsRenderer> {
 
   Widget getFinalText(MapEntry<int, Chord> chord) {
     if (widget.minorScale) {
-      return RichText(text: TextSpan(text: transposeToMinor(chord.value.chordText), style: widget.chordStyle), textScaler: TextScaler.linear(widget.scaleFactor),);
+      return RichText(
+        text: TextSpan(
+            text: transposeToMinor(chord.value.chordText),
+            style: widget.chordStyle),
+        textScaler: TextScaler.linear(widget.scaleFactor),
+      );
     }
     return RichText(
       text: TextSpan(
         text: widget.chordPresentation != null
-          ? replaceChord(
-            chord.value.chordText)
-          : chord.value.chordText,
-            style: widget.chordStyle,
-          ), textScaler: TextScaler.linear(widget.scaleFactor),
+            ? replaceChord(chord.value.chordText)
+            : chord.value.chordText,
+        style: widget.chordStyle,
+      ),
+      textScaler: TextScaler.linear(widget.scaleFactor),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     ChordProcessor chordProcessor =
@@ -261,7 +267,8 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                   if (widget.showText)
                     RichText(
                       text: TextSpan(
-                          text: line.lyrics, style: getLineTextStyle()), textScaler: TextScaler.linear(widget.scaleFactor),
+                          text: line.lyrics, style: getLineTextStyle()),
+                      textScaler: TextScaler.linear(widget.scaleFactor),
                     )
                 ],
               );
