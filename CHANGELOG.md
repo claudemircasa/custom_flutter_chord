@@ -1,3 +1,6 @@
+## 0.1.5
+* Option to set transpose to natural minor scale
+
 ## 0.1.4
 * Option to set fixed spaces when showing only chords
 
