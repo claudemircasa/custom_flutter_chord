@@ -9,6 +9,7 @@ class LyricsRenderer extends StatefulWidget {
   final TextStyle chordStyle;
   final bool showChord;
   final bool showText;
+  final bool minorScale;
   final Function onTapChord;
 
   /// To help stop overflow, this should be the sum of left & right padding
@@ -68,6 +69,7 @@ class LyricsRenderer extends StatefulWidget {
       this.scaleFactor = 1.0,
       this.showChord = true,
       this.showText = true,
+      this.minorScale = false,
       this.widgetPadding = 0,
       this.transposeIncrement = 0,
       this.scrollSpeed = 0,
@@ -153,9 +155,39 @@ class _LyricsRendererState extends State<LyricsRenderer> {
         }
         break;
     }
+
     return currentChord;
   }
 
+  String transposeToMinor(String chord) {
+    String currentChord = chord;
+
+    // transpose chords into minor natural scale based on 5th circle
+    if (widget.minorScale && !chord.contains('m')) {
+      for (var c in minorScale.entries) {
+        if (chord.contains(c.key)) {
+          currentChord = chord.replaceAll(RegExp(c.key), c.value);
+        }
+      }
+    }
+
+    return currentChord;
+  }
+
+  Widget getFinalText(MapEntry<int, Chord> chord) {
+    if (widget.minorScale) {
+      return RichText(text: TextSpan(text: transposeToMinor(chord.value.chordText), style: widget.chordStyle), textScaler: TextScaler.linear(widget.scaleFactor),);
+    }
+    return RichText(
+      text: TextSpan(
+        text: widget.chordPresentation != null
+          ? replaceChord(
+            chord.value.chordText)
+          : chord.value.chordText,
+            style: widget.chordStyle,
+          ), textScaler: TextScaler.linear(widget.scaleFactor),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     ChordProcessor chordProcessor =
@@ -220,16 +252,7 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                                   GestureDetector(
                                     onTap: () => widget
                                         .onTapChord(chord.value.chordText),
-                                    child: RichText(
-                                      textScaleFactor: widget.scaleFactor,
-                                      text: TextSpan(
-                                        text: widget.chordPresentation != null
-                                            ? replaceChord(
-                                                chord.value.chordText)
-                                            : chord.value.chordText,
-                                        style: widget.chordStyle,
-                                      ),
-                                    ),
+                                    child: getFinalText(chord),
                                   )
                                 ],
                               ))
@@ -237,9 +260,8 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                     ),
                   if (widget.showText)
                     RichText(
-                      textScaleFactor: widget.scaleFactor,
                       text: TextSpan(
-                          text: line.lyrics, style: getLineTextStyle()),
+                          text: line.lyrics, style: getLineTextStyle()), textScaler: TextScaler.linear(widget.scaleFactor),
                     )
                 ],
               );

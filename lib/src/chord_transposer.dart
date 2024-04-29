@@ -4,8 +4,37 @@ enum ChordNotation {
   german,
   traditionalGerman,
   french,
-  portuguese
+  portuguese,
 }
+
+enum ChordScale {
+  major,
+  minor
+}
+
+const Map<String, String> minorScale = {
+  "Cb": "G#m",
+  "C": "Am",
+  "C#": "Bbm",
+  "Db": "Bbm",
+  "D": "Bm",
+  "D#": "Cm",
+  "Eb": "Cm",
+  "E": "C#m",
+  "E#": "Dm",
+  "Fb": "C#m",
+  "F": "Dm",
+  "F#": "D#m",
+  "Gb": "Ebm",
+  "G" : "Em",
+  "G#": "Fm",
+  "Ab": "Fm",
+  "A": "F#m",
+  "A#": "Gm",
+  "Bb": "Gm",
+  "B": "G#m",
+  "B#": "Am"
+};
 
 const List<String> americanNotes = [
   "C",

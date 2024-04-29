@@ -138,7 +138,8 @@ class _HomePageState extends State<HomePage> {
                 widgetPadding: 24,
                 lineHeight: 4,
                 showText: true,
-                showChord: false,
+                showChord: true,
+                minorScale: false,
                 horizontalAlignment: CrossAxisAlignment.start,
                 leadingWidget: Padding(
                   padding: const EdgeInsets.symmetric(
