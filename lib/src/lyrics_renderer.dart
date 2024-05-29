@@ -242,7 +242,7 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (widget.showChord)
-                  SingleChildScrollView(
+                    SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: line.chords
@@ -266,7 +266,7 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                                 ))
                             .toList(),
                       ),
-                  ),
+                    ),
                   if (widget.showText)
                     RichText(
                       text: TextSpan(
