@@ -242,28 +242,31 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (widget.showChord)
-                    Row(
-                      children: line.chords
-                          .asMap()
-                          .entries
-                          .map((chord) => Row(
-                                children: [
-                                  SizedBox(
-                                    width: !widget.showText
-                                        ? (chord.key == 0
-                                            ? 0
-                                            : widget.fixedChordSpace)
-                                        : chord.value.leadingSpace,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => widget
-                                        .onTapChord(chord.value.chordText),
-                                    child: getFinalText(chord),
-                                  )
-                                ],
-                              ))
-                          .toList(),
-                    ),
+                  SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: line.chords
+                            .asMap()
+                            .entries
+                            .map((chord) => Row(
+                                  children: [
+                                    SizedBox(
+                                      width: !widget.showText
+                                          ? (chord.key == 0
+                                              ? 0
+                                              : widget.fixedChordSpace)
+                                          : chord.value.leadingSpace,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => widget
+                                          .onTapChord(chord.value.chordText),
+                                      child: getFinalText(chord),
+                                    )
+                                  ],
+                                ))
+                            .toList(),
+                      ),
+                  ),
                   if (widget.showText)
                     RichText(
                       text: TextSpan(
