@@ -42,6 +42,8 @@ final lyrics = '''
     minorScale: false, // transpose to minor scale
     // you can replace default presentation by a list of 7 string elements
     // chordPresentation: List<String>['DO', 'RÉ', ...]
+    // fixedChordSpace?
+    // parentWidth?
   );
 }
 ```

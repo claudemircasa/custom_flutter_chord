@@ -11,10 +11,12 @@ class ChordProcessor {
   final ChordTransposer chordTransposer;
   final double media;
   late double _textScaleFactor;
+  final double? parentWidth;
 
-  ChordProcessor(this.context, [this.chordNotation = ChordNotation.american])
+  ChordProcessor(this.context,
+      [this.chordNotation = ChordNotation.american, this.parentWidth])
       : chordTransposer = ChordTransposer(chordNotation),
-        media = MediaQuery.of(context).size.width;
+        media = parentWidth ?? MediaQuery.of(context).size.width;
 
   /// Process the text to get the parsed ChordLyricsDocument
   ChordLyricsDocument processText({

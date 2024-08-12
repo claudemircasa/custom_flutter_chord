@@ -57,6 +57,8 @@ class LyricsRenderer extends StatefulWidget {
 
   final double fixedChordSpace;
 
+  final double? parentWidth;
+
   const LyricsRenderer(
       {super.key,
       required this.lyrics,
@@ -80,7 +82,8 @@ class LyricsRenderer extends StatefulWidget {
       this.trailingWidget,
       this.chordNotation = ChordNotation.american,
       this.chordPresentation,
-      this.fixedChordSpace = 20.0});
+      this.fixedChordSpace = 20.0,
+      this.parentWidth});
 
   @override
   State<LyricsRenderer> createState() => _LyricsRendererState();
@@ -197,7 +200,7 @@ class _LyricsRendererState extends State<LyricsRenderer> {
   @override
   Widget build(BuildContext context) {
     ChordProcessor chordProcessor =
-        ChordProcessor(context, widget.chordNotation);
+        ChordProcessor(context, widget.chordNotation, widget.parentWidth);
     final chordLyricsDocument = chordProcessor.processText(
       text: widget.lyrics,
       lyricsStyle: widget.textStyle,
