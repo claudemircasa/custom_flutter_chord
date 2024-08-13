@@ -1,3 +1,6 @@
+## 0.1.7
+* option to set parent width when show LyricsRenderer in two columns
+
 ## 0.1.6
 * Fix bug of 'render overflow' of chord lines
 
