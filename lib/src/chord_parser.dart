@@ -118,7 +118,7 @@ class ChordProcessor {
   /// Return the textwidth of the text in the given style
   double textWidth(String text, TextStyle textStyle) {
     return (TextPainter(
-      textScaleFactor: _textScaleFactor,
+      textScaler: TextScaler.linear(_textScaleFactor),
       text: TextSpan(text: text, style: textStyle),
       maxLines: 1,
       textDirection: TextDirection.ltr,

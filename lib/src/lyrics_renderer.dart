@@ -12,6 +12,9 @@ class LyricsRenderer extends StatefulWidget {
   final bool minorScale;
   final Function onTapChord;
 
+  // Call handler when lyrics is processed (reive a ChordLyricsDocument)
+  final Function? onLyricsProcessed;
+
   /// To help stop overflow, this should be the sum of left & right padding
   final int widgetPadding;
 
@@ -53,8 +56,10 @@ class LyricsRenderer extends StatefulWidget {
   /// If not defined it will be the italic version of [textStyle]
   final TextStyle? commentStyle;
 
+  /// replace current chord names
   final List<String>? chordPresentation;
 
+  /// fixed space between chords when show only chords
   final double fixedChordSpace;
 
   final double? parentWidth;
@@ -65,6 +70,7 @@ class LyricsRenderer extends StatefulWidget {
       required this.textStyle,
       required this.chordStyle,
       required this.onTapChord,
+      this.onLyricsProcessed,
       this.chorusStyle,
       this.commentStyle,
       this.capoStyle,
@@ -210,6 +216,11 @@ class _LyricsRendererState extends State<LyricsRenderer> {
       scaleFactor: widget.scaleFactor,
       transposeIncrement: widget.transposeIncrement,
     );
+
+    if (widget.onLyricsProcessed != null) {
+      widget.onLyricsProcessed!(chordLyricsDocument);
+    }
+
     if (chordLyricsDocument.chordLyricsLines.isEmpty) return Container();
     return SingleChildScrollView(
       controller: _controller,

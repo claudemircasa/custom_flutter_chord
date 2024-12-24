@@ -1,3 +1,6 @@
+## 0.1.8
+* option to set hendler when lyrics is processed
+
 ## 0.1.7
 * option to set parent width when show LyricsRenderer in two columns
 
