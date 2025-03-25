@@ -44,6 +44,7 @@ final lyrics = '''
     // chordPresentation: List<String>['DO', 'RÉ', ...]
     // fixedChordSpace?
     // parentWidth?
+    underlineChordSyllables: true, // underline char at bottom of chords
   );
 }
 ```
