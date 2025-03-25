@@ -146,17 +146,6 @@ class ChordProcessor {
             ? textWidth(lyricsSoFar, chorusStyle)
             : textWidth(lyricsSoFar, lyricsStyle);
 
-        // get possition of first char bottom chord
-        // add start and end range of position to underline
-        final withoutChords = line.replaceAll(RegExp(r"\[(.*?)\]"),"");
-        if (counter < withoutChords.length) {
-          if (counter+2 <= withoutChords.length) {
-            chordLyricsLine.underlines.add([counter, counter+2]);
-          } else {
-            chordLyricsLine.underlines.add([counter, line.length]);
-          }
-        }
-
         final lastChordText = chordLyricsLine.chords.isNotEmpty
             ? chordLyricsLine.chords.last.chordText
             : '';
@@ -173,6 +162,11 @@ class ChordProcessor {
         lyricsSoFar = '';
         chordsSoFar = '';
         chordHasStarted = false;
+
+        final withoutChords = line.replaceAll(RegExp(r"\[(.*?)\]"),"").trim();
+        if (counter+2 < withoutChords.length) {
+          chordLyricsLine.underlines.add([counter, counter+2]);
+        }
       } else if (character == '[') {
         chordHasStarted = true;
       } else {

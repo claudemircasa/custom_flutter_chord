@@ -1,3 +1,6 @@
+## 0.2.1
+* fix bug "out of index" in "underline chars" option
+
 ## 0.2.0
 * option to underline chars at bottom of chords
 
