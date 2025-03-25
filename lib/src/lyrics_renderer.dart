@@ -312,8 +312,12 @@ class _LyricsRendererState extends State<LyricsRenderer> {
     int lastIndex = 0;
 
     for (var element in line.underlines) {
-      textParts.add(TextSpan(text: line.lyrics.substring(lastIndex, element.first), style: getLineTextStyle()));
-      textParts.add(TextSpan(text: line.lyrics.substring(element.first, element.last), style: underDecorator));
+      try {
+        textParts.add(TextSpan(text: line.lyrics.substring(lastIndex, element.first), style: getLineTextStyle()));
+        textParts.add(TextSpan(text: line.lyrics.substring(element.first, element.last), style: underDecorator));
+      } catch (e) {
+        continue;
+      }
       lastIndex = element.last;
     }
     textParts.add(TextSpan(text: line.lyrics.substring(lastIndex, line.lyrics.length), style: getLineTextStyle()));
