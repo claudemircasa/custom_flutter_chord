@@ -1,12 +1,14 @@
 class ChordLyricsLine {
   List<Chord> chords;
   String lyrics;
+  List<List<int>> underlines; 
 
   ChordLyricsLine()
       : chords = [],
-        lyrics = '';
+        lyrics = '',
+        underlines =[];
 
-  ChordLyricsLine.line(this.chords, this.lyrics);
+  ChordLyricsLine.line(this.chords, this.lyrics, this.underlines);
 
   /// Remove also the keyword
   bool isStartOfChorus() {

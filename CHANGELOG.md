@@ -1,3 +1,6 @@
+## 0.2.0
+* option to underline chars at bottom of chords
+
 ## 0.1.8
 * option to set hendler when lyrics is processed
 

@@ -10,6 +10,7 @@ class LyricsRenderer extends StatefulWidget {
   final bool showChord;
   final bool showText;
   final bool minorScale;
+  final bool underlineChordSyllables;
   final Function onTapChord;
 
   // Call handler when lyrics is processed (reive a ChordLyricsDocument)
@@ -78,6 +79,7 @@ class LyricsRenderer extends StatefulWidget {
       this.showChord = true,
       this.showText = true,
       this.minorScale = false,
+      this.underlineChordSyllables = true,
       this.widgetPadding = 0,
       this.transposeIncrement = 0,
       this.scrollSpeed = 0,
@@ -241,6 +243,7 @@ class _LyricsRendererState extends State<LyricsRenderer> {
             itemBuilder: (context, index) {
               final ChordLyricsLine line =
                   chordLyricsDocument.chordLyricsLines[index];
+
               if (line.isStartOfChorus()) {
                 _isChorus = true;
               }
@@ -282,11 +285,7 @@ class _LyricsRendererState extends State<LyricsRenderer> {
                       ),
                     ),
                   if (widget.showText)
-                    RichText(
-                      text: TextSpan(
-                          text: line.lyrics, style: getLineTextStyle()),
-                      textScaler: TextScaler.linear(widget.scaleFactor),
-                    )
+                    _formatLineWithUnderlines(line)
                 ],
               );
             },
@@ -304,6 +303,28 @@ class _LyricsRendererState extends State<LyricsRenderer> {
     if (oldWidget.scrollSpeed != widget.scrollSpeed) {
       _scrollToEnd();
     }
+  }
+  
+  Widget _formatLineWithUnderlines(ChordLyricsLine line) {
+    List<TextSpan> textParts = [];
+    TextStyle underDecorator = getLineTextStyle().merge(const TextStyle(decoration: TextDecoration.underline));
+    
+    int lastIndex = 0;
+
+    for (var element in line.underlines) {
+      textParts.add(TextSpan(text: line.lyrics.substring(lastIndex, element.first), style: getLineTextStyle()));
+      textParts.add(TextSpan(text: line.lyrics.substring(element.first, element.last), style: underDecorator));
+      lastIndex = element.last;
+    }
+    textParts.add(TextSpan(text: line.lyrics.substring(lastIndex, line.lyrics.length), style: getLineTextStyle()));
+
+    return RichText(
+      text: TextSpan(
+          text: '',
+          children: textParts
+        ),
+        textScaler: TextScaler.linear(widget.scaleFactor),
+    );
   }
 
   void _scrollToEnd() {

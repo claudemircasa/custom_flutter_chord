@@ -131,11 +131,11 @@ class _HomePageState extends State<HomePage> {
                 textStyle: textStyle,
                 chordStyle: chordStyle,
                 onTapChord: (String chord) {
-                  print('pressed chord: $chord');
+                  //print('pressed chord: $chord');
                 },
                 onLyricsProcessed: (ChordLyricsDocument document) {
-                  print(document.chordLyricsLines.first.chords.toString());
-                  print(document.chordLyricsLines.first.lyrics);
+                  //print(document.chordLyricsLines.first.chords.toString());
+                  //print(document.chordLyricsLines.first.lyrics);
                 },
                 transposeIncrement: transposeIncrement,
                 scrollSpeed: scrollSpeed,
